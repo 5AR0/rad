@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: GALLERY-SERVICE
+    jackson.serialization.indent_output: true
+  cloud:
+    config:
+      import:
+        - http://localhost:9196
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      gallery-service:
+        registerHealthIndicator: true
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        eventConsumerBufferSize: 10
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+server:
+  port: 8081
+

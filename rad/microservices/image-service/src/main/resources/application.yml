@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: IMAGE-SERVICE
+  cloud:
+    config:
+      import:
+        - http://localhost:9196
+
+server:
+  port: 8082

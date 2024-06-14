@@ -1,0 +1,20 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: GALLERY-SERVICE
+          uri: lb://GALLERY-SERVICE
+          predicates:
+            - Path=/gallery/**
+        - id: IMAGE-SERVICE
+          uri: lb://IMAGE-SERVICE
+          predicates:
+            - Path=/images/**
+    config:
+      import:
+        - http://localhost:9196
